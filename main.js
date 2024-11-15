@@ -37,7 +37,7 @@ async function main() {
             kubeConfigLocation,
             "\r\n\r\n" + process.env.INPUT_KUBECONFIG + "\r\n\r\n",
             {
-                mode: 0o644,
+                mode: 0o600,
             }
         );
     } else if (kubeConfigExists) {
@@ -51,7 +51,7 @@ async function main() {
             kubeConfigLocation,
             "\r\n\r\n" + process.env.INPUT_KUBECONFIG + "\r\n\r\n",
             {
-                mode: 0o644,
+                mode: 0o600,
             }
         );
     }
@@ -60,7 +60,7 @@ async function main() {
         dockerKubeConfig,
         fs.readFileSync(kubeConfigLocation),
         {
-            mode: 0o777,
+            mode: 0o600,
         }
     );
     console.log("\033[36mPreparing helm execution\033[0m");
