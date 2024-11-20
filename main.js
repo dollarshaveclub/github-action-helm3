@@ -1,10 +1,13 @@
 async function main() {
+    const {randomUUID} = require('crypto');
     const homedir = require('os').homedir();
     const tempdir = require('os').tmpdir();
     const fs = require('fs');
     const {execFile} = require('child_process');
     const tmp = require('tmp');
     const {waitFile} = require('wait-file');
+
+    const multiLineDelimiter = randomUUID();
 
     console.log("\033[36mPWD: " + process.cwd() + "\033[0m");
 
@@ -108,7 +111,10 @@ async function main() {
                 }
             });
         });
-        fs.appendFileSync(process.env.GITHUB_OUTPUT, 'helm_output=' + result.trim().split('%').join('%25').split('\n').join('%0A').split('\r').join('%0D') + '\n');
+        fs.appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            `helm_output<<${multiLineDelimiter}\n${result.trim()}\n${multiLineDelimiter}\n`
+        );
     } catch (error) {
         process.exit(1);
     } finally {
